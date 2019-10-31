@@ -6,35 +6,31 @@ function loader () {
     var data = new Date()
     var hoursInput = window.document.getElementById("hourInput").value;
     var minutesInput = window.document.getElementById("minuteInput").value;
-    var hours;
-    var minutes;
 
-        // To fix a caller function that choose if the input in valid, if isn't set the value by default.
-      /*  function hourChanger() {
-            if (hoursInput.value !== "" && minutesInput.value !== "" ) {
-                var hours = hoursInput;
-                var minutes = minutesInput
-                return;    
-            }
-          
-            else {
-      */
-                var hours = data.getHours();
-                var minutes = data.getMinutes();
-        //        return;
-          //  }    
-        //}
-    //hourChanger();
-    msg.innerHTML = `It's ${hours}h:${minutes}m.`;
+
+    function setRealTime() {
+        hoursInput = data.getHours();
+        minutesInput = data.getMinutes();
+    }
+    if  (hoursInput === "" && minutesInput === "") {
+        setRealTime();
+    }
+    if ((hoursInput > 23 || hoursInput < 0) || (minutesInput > 60 || minutesInput < 0)) {
+        alert("Please, insert a valid number for hour and minutes");
+         window.document.getElementById("hourInput").value = '';
+         window.document.getElementById("minuteInput").value = '';
+        setRealTime();
+        
+    }
+
+    msg.innerHTML = `It's ${hoursInput}h:${minutesInput}m.`;    
     
 
-    
-
-    if (hours >= 6 && hours < 12) {
+    if (hoursInput >= 6 && hoursInput < 12) {
         img.src =`morning.png`
         document.body.style.background = "#bdf1f9";
         secondMsg.innerHTML = `If you're seeing my project I wish you a good morning`
-    }else if (hours >= 12 && hours < 18) {
+    }else if (hoursInput >= 12 && hoursInput < 18) {
         img.src =`afternoon.png`
         document.body.style.background = "#FFAB68";
         secondMsg.innerHTML = `If you're seeing my project I wish you a good afternoon`
